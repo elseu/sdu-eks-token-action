@@ -31,7 +31,7 @@ runs:
         if [ ! -z "${{ inputs.role-arn }}" ]; then
           ROLE_ARN_ARGS=("--role-arn" "${{ inputs.role-arn }}")
         fi
-        RAW=$(aws eks get-token --name "${{ inputs.cluster-name }}" "${ROLE_ARN_ARGS[@]}")
+        RAW=$(aws eks get-token --cluster-name "${{ inputs.cluster-name }}" "${ROLE_ARN_ARGS[@]}")
         TOKEN=$(echo $RAW | jq -r .status.token)
         echo "::set-output name=token::$(echo $TOKEN)"
         echo "::set-output name=raw::$(echo $RAW)"
