@@ -32,9 +32,9 @@ runs:
           ROLE_ARN_ARGS=("--role-arn" "${{ inputs.role-arn }}")
         fi
         RAW=$(aws eks get-token --cluster-name "${{ inputs.cluster-name }}" "${ROLE_ARN_ARGS[@]}")
-        TOKEN=$(echo $RAW | jq -r .status.token)
-        echo "::add-mask::$RAW"
+        TOKEN=$(echo $RAW | jq -rj .status.token)
         echo "::add-mask::$TOKEN"
-        echo "::set-output name=token::$(echo $TOKEN)"
-        echo "::set-output name=raw::$(echo $RAW)"
+        echo "::add-mask::$RAW"
+        echo "::set-output name=token::$TOKEN"
+        echo "::set-output name=raw::$RAW"
       shell: bash
