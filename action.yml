@@ -1,0 +1,38 @@
+name: EKS get-token Action
+description: Action to get an access token from EKS
+author: elseu
+inputs:
+  cluster-name:
+    description: Cluster name to get the token for (required).
+    required: true
+  role-arn:
+    description: Role ARN for the token.
+    required: false
+outputs:
+  token:
+    description: The bearer token for authentication
+    value: ${{ steps.get-token.outputs.token }}
+  raw:
+    description: Raw output from the eks get-token subcommand
+    value: ${{ steps.get-token.outputs.raw }}
+runs:
+  using: "composite"
+  steps:
+    - id: print-inputs
+      run: |
+        echo "Cluster name: ${{ inputs.cluster-name }}"
+        echo "Role ARN: ${{ inputs.role-arn }}"
+      shell: bash
+
+    - id: get-token
+      run: |
+        set -e
+        ROLE_ARN_ARGS=()
+        if [ ! -z "${{ inputs.role-arn }}" ]; then
+          ROLE_ARN_ARGS=("--role-arn" "${{ inputs.role-arn }}")
+        fi
+        RAW=$(aws eks get-token --name "${{ inputs.cluster-name }}" "${ROLE_ARN_ARGS[@]}")
+        TOKEN=$(echo $RAW | jq -r .status.token)
+        echo "::set-output name=token::$(echo $TOKEN)"
+        echo "::set-output name=raw::$(echo $RAW)"
+      shell: bash
