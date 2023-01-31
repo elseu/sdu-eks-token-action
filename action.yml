@@ -35,6 +35,6 @@ runs:
         TOKEN=$(echo $RAW | jq -rj .status.token)
         echo "::add-mask::$TOKEN"
         echo "::add-mask::$RAW"
-        echo "::set-output name=token::$TOKEN"
-        echo "::set-output name=raw::$RAW"
+        echo "token=$TOKEN" >> $GITHUB_OUTPUT
+        echo "raw=$RAW" >> $GITHUB_OUTPUT
       shell: bash
