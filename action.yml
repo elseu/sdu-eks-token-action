@@ -36,5 +36,5 @@ runs:
         echo "::add-mask::$TOKEN"
         echo "::add-mask::$RAW"
         echo "token=$TOKEN" >> $GITHUB_OUTPUT
-        echo "raw=$RAW" >> $GITHUB_OUTPUT
+        echo 'raw=$RAW' >> $GITHUB_OUTPUT
       shell: bash
