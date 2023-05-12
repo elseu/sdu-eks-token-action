@@ -36,5 +36,11 @@ runs:
         echo "::add-mask::$TOKEN"
         echo "::add-mask::$RAW"
         echo "token=$TOKEN" >> $GITHUB_OUTPUT
-        echo 'raw=$RAW' >> $GITHUB_OUTPUT
+        
+        # Delimiter is required to set multiline string to GitHub output
+        delimiter="$(openssl rand -hex 8)"
+        echo "raw<<${delimiter}" >> "${GITHUB_OUTPUT}"
+        echo "$RAW" >> "${GITHUB_OUTPUT}"
+        echo "${delimiter}" >> "${GITHUB_OUTPUT}"
+
       shell: bash
