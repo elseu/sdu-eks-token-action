@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1beta1
+kind: Component
+metadata:
+  name: sdu-eks-token-action
+  description: "Action to get an access token from EKS"
+  annotations:
+    github.com/project-slug: elseu/sdu-eks-token-action
+    backstage.io/source-location: url:https://github.com/elseu/sdu-eks-token-action/
+  tags:
+    - other
+spec:
+  type: unspecified
+  owner: team-architects
+  lifecycle: unspecified
